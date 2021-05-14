@@ -1,0 +1,51 @@
+# syntax=docker/dockerfile:1
+# x=y
+
+ARG one=1
+ARG two="second"
+ARG three
+
+FROM image:2.3-alpine
+
+LABEL author="Me"
+LABEL version="0.0\
+0.1"
+
+ENV var=value
+
+# Install Curl
+RUN apk update && apk add --no-cache \
+    curl \
+    libpng
+
+# Change work dir
+WORKDIR /var/www/app
+
+RUN apk add --no-cache \
+    xxx \
+    yyy
+
+# File to file
+COPY file.txt file.txt
+
+ADD http://file file
+
+WORKDIR /var/log
+
+COPY --chown=1000:1000 ["a","b","c","dir"]
+
+# Run test
+RUN one /
+    && two /
+    && three
+
+VOLUME ["/var/log","/home/me"]
+
+EXPOSE 80/tcp
+EXPOSE 80/udp
+
+ENTRYPOINT /bin/sh
+
+CMD ["one","two","three"]
+
+USER 1000:1000

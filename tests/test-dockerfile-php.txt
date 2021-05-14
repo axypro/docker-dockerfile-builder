@@ -1,0 +1,23 @@
+FROM php:8.0-fpm-alpine
+
+ENV var=value
+
+# Install Curl
+RUN apk update && apk add --no-cache \
+    curl \
+    libpng
+
+RUN docker-php-ext-install \
+    bcmath \
+    pdo_mysql \
+&& pecl install \
+    xdebug \
+    imagick \
+&& docker-php-ext-enable \
+    xdebug \
+    imagick \
+&& echo "error_reporting=E_ALL" >> /usr/local/etc/php/conf.d/docker.ini \
+&& echo "display_errors=On" >> /usr/local/etc/php/conf.d/docker.ini \
+&& curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+USER 1000:1000

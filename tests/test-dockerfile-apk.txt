@@ -1,0 +1,12 @@
+FROM image:2.3
+
+# Install Curl
+RUN apt-get update && apt-get install -y \
+    curl \
+    libpng
+
+RUN apt-get install -y \
+    xxx \
+    yyy
+
+RUN rm -rf /var/lib/apt/lists/*
